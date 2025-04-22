@@ -128,12 +128,13 @@ public:
         initButton = new QPushButton(Widget);
         initButton->setObjectName("initButton");
         initButton->setGeometry(QRect(50, 510, 141, 41));
-        initButton->setStyleSheet(QString::fromUtf8("font: 18pt \"\351\230\277\351\207\214\345\246\210\345\246\210\344\270\234\346\226\271\345\244\247\346\245\267\";\n"
+        initButton->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 188, 140);\n"
 "font: 16pt \"Calibri\";"));
         runButton = new QPushButton(Widget);
         runButton->setObjectName("runButton");
         runButton->setGeometry(QRect(230, 510, 141, 41));
-        runButton->setStyleSheet(QString::fromUtf8("font: 16pt \"Calibri\";"));
+        runButton->setStyleSheet(QString::fromUtf8("font: 16pt \"Calibri\";\n"
+"background-color: rgb(255, 188, 140);"));
         algorithmCombo = new QComboBox(Widget);
         algorithmCombo->addItem(QString());
         algorithmCombo->addItem(QString());

@@ -38,6 +38,7 @@ private:
 
     int emptyRow, emptyCol;
     int steps;
+    bool isAnimating = false;
 
     void initializePuzzle();
     void updatePuzzleUI();

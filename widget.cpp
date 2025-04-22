@@ -125,7 +125,7 @@ void Widget::updatePuzzleUI(const QPoint &highlight)
 
 void Widget::updatePuzzleUI() {
     QFont tileFont;
-    tileFont.setPointSize(16);       // 设置字体大小
+    tileFont.setPointSize(20);       // 设置字体大小
     tileFont.setBold(true);          // 设置加粗
     tileFont.setFamily("阿里妈妈东方大楷");     // 设置字体（可改为你喜欢的）
 
@@ -230,19 +230,24 @@ void Widget::playAnimationPath(const QList<QVector<QVector<int>>> &path, int del
     }
 
     int step = 0;
-    // 如果有旧动画，先停掉
+
+    // ✅ 正确停止已有动画
     if (animationTimer) {
         animationTimer->stop();
         animationTimer->deleteLater();
         animationTimer = nullptr;
     }
-    QTimer *timerAnim = new QTimer(this);
 
-    connect(timerAnim, &QTimer::timeout, this, [=]() mutable {
+    isAnimating = true;
+
+    // ✅ 使用成员变量 animationTimer
+    animationTimer = new QTimer(this);
+    connect(animationTimer, &QTimer::timeout, this, [=]() mutable {
         if (step >= path.size()) {
-            timerAnim->stop();
-            timerAnim->deleteLater();
+            animationTimer->stop();
+            animationTimer->deleteLater();
             animationTimer = nullptr;
+            isAnimating = false;
             ui->goalLabel->setText(finalMessage);
             return;
         }
@@ -251,12 +256,10 @@ void Widget::playAnimationPath(const QList<QVector<QVector<int>>> &path, int del
             QVector<QVector<int>> prev = path[step - 1];
             QVector<QVector<int>> curr = path[step];
 
-            // 找到哪个格子动了
             for (int i = 0; i < 3; ++i) {
                 for (int j = 0; j < 3; ++j) {
-                    if (prev[i][j] != 0 && curr[i][j] == 0) { // moved to blank
+                    if (prev[i][j] != 0 && curr[i][j] == 0) {
                         int fromRow = i, fromCol = j;
-                        // 找新位置
                         for (int r = 0; r < 3; ++r) {
                             for (int c = 0; c < 3; ++c) {
                                 if (curr[r][c] == prev[i][j]) {
@@ -274,8 +277,11 @@ void Widget::playAnimationPath(const QList<QVector<QVector<int>>> &path, int del
         puzzle = path[step];
         step++;
     });
-    timerAnim->start(delayMs);
+
+    animationTimer->start(delayMs); // ✅ 用 animationTimer 启动动画
 }
+
+
 
 
 // runButton点击事件
@@ -377,6 +383,15 @@ void Widget::on_runButton_clicked()
 
 void Widget::on_initButton_clicked()
 {
-
+    // 停止当前动画
+    if (isAnimating) {
+        // 如果动画正在进行，停止动画
+        isAnimating = false;  // 标记为停止动画
+        if (animationTimer) {
+            animationTimer->stop();
+            animationTimer->deleteLater();
+            animationTimer = nullptr;
+        }
+    }
     initializePuzzle();
 }

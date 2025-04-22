@@ -189,7 +189,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 18pt &quot;阿里妈妈东方大楷&quot;;
+    <string notr="true">background-color: rgb(255, 188, 140);
 font: 16pt &quot;Calibri&quot;;</string>
    </property>
    <property name="text">
@@ -206,7 +206,8 @@ font: 16pt &quot;Calibri&quot;;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 16pt &quot;Calibri&quot;;</string>
+    <string notr="true">font: 16pt &quot;Calibri&quot;;
+background-color: rgb(255, 188, 140);</string>
    </property>
    <property name="text">
     <string>Run</string>
