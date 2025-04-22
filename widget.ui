@@ -19,7 +19,7 @@
      <x>40</x>
      <y>170</y>
      <width>341</width>
-     <height>301</height>
+     <height>316</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -27,6 +27,12 @@
      <layout class="QGridLayout" name="puzzleGrid">
       <item row="2" column="1">
        <widget class="QPushButton" name="pushButton_8">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -34,6 +40,12 @@
       </item>
       <item row="2" column="2">
        <widget class="QPushButton" name="pushButton_9">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -41,6 +53,18 @@
       </item>
       <item row="1" column="0">
        <widget class="QPushButton" name="pushButton_4">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -48,6 +72,18 @@
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="pushButton_2">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -55,6 +91,18 @@
       </item>
       <item row="1" column="1">
        <widget class="QPushButton" name="pushButton_5">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -62,6 +110,12 @@
       </item>
       <item row="0" column="2">
        <widget class="QPushButton" name="pushButton_3">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -69,6 +123,18 @@
       </item>
       <item row="2" column="0">
        <widget class="QPushButton" name="pushButton_7">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -76,6 +142,12 @@
       </item>
       <item row="1" column="2">
        <widget class="QPushButton" name="pushButton_6">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="text">
          <string>PushButton</string>
         </property>
@@ -85,9 +157,18 @@
        <widget class="QPushButton" name="pushButton_1">
         <property name="minimumSize">
          <size>
-          <width>66</width>
-          <height>0</height>
+          <width>100</width>
+          <height>100</height>
          </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 14pt &quot;阿里妈妈东方大楷&quot;;</string>
         </property>
         <property name="text">
          <string>PushButton</string>
@@ -101,14 +182,15 @@
   <widget class="QPushButton" name="initButton">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>50</x>
      <y>510</y>
      <width>141</width>
      <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 18pt &quot;阿里妈妈东方大楷&quot;;</string>
+    <string notr="true">font: 18pt &quot;阿里妈妈东方大楷&quot;;
+font: 16pt &quot;Calibri&quot;;</string>
    </property>
    <property name="text">
     <string>Initialization</string>
@@ -117,14 +199,14 @@
   <widget class="QPushButton" name="runButton">
    <property name="geometry">
     <rect>
-     <x>240</x>
+     <x>230</x>
      <y>510</y>
      <width>141</width>
      <height>41</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 18pt &quot;阿里妈妈东方大楷&quot;;</string>
+    <string notr="true">font: 16pt &quot;Calibri&quot;;</string>
    </property>
    <property name="text">
     <string>Run</string>

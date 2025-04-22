@@ -22,6 +22,7 @@ public:
     ~Widget();
 
     void updatePuzzleUI(const QPoint &highlight);
+    void animateTileSlide(int fromRow, int fromCol, int toRow, int toCol, int value);
 private slots:
     void on_initButton_clicked();
     void on_runButton_clicked();
@@ -33,6 +34,7 @@ private:
     QVector<QVector<int>> puzzle;
     QVector<QPushButton*> tileButtons;
     QVector<QVector<int>> goalState;
+    QTimer *animationTimer = nullptr;
 
     int emptyRow, emptyCol;
     int steps;

@@ -103,19 +103,19 @@ void Widget::updatePuzzleUI(const QPoint &highlight)
                 btn->setStyleSheet("background-color: white;");
 
                 if (highlight == QPoint(i, j)) {
-                    tileButtons[index]->setStyleSheet("background-color: red; color: white;");
+                    // tileButtons[index]->setStyleSheet("background-color: red; color: white;");
 
-                    // 动画：放大再还原
-                    QPropertyAnimation *anim = new QPropertyAnimation(btn, "geometry");
-                    QRect startRect = btn->geometry();
-                    QRect bigRect = startRect.adjusted(-5, -5, 5, 5);  // 放大
+                    // // 动画：放大再还原
+                    // QPropertyAnimation *anim = new QPropertyAnimation(btn, "geometry");
+                    // QRect startRect = btn->geometry();
+                    // QRect bigRect = startRect.adjusted(-5, -5, 5, 5);  // 放大
 
-                    anim->setDuration(300);
-                    anim->setKeyValueAt(0, startRect);
-                    anim->setKeyValueAt(0.5, bigRect);
-                    anim->setKeyValueAt(1, startRect);
-                    anim->setEasingCurve(QEasingCurve::OutBack);
-                    anim->start(QAbstractAnimation::DeleteWhenStopped);
+                    // anim->setDuration(300);
+                    // anim->setKeyValueAt(0, startRect);
+                    // anim->setKeyValueAt(0.5, bigRect);
+                    // anim->setKeyValueAt(1, startRect);
+                    // anim->setEasingCurve(QEasingCurve::OutBack);
+                    // anim->start(QAbstractAnimation::DeleteWhenStopped);
                 }
             }
         }
@@ -124,8 +124,29 @@ void Widget::updatePuzzleUI(const QPoint &highlight)
 
 
 void Widget::updatePuzzleUI() {
-    updatePuzzleUI(QPoint(-1, -1));  // 默认无高亮
+    QFont tileFont;
+    tileFont.setPointSize(16);       // 设置字体大小
+    tileFont.setBold(true);          // 设置加粗
+    tileFont.setFamily("阿里妈妈东方大楷");     // 设置字体（可改为你喜欢的）
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            int index = i * 3 + j;
+            QPushButton *btn = tileButtons[index];
+
+            btn->setFont(tileFont);
+
+            if (puzzle[i][j] == 0) {
+                btn->setText("");
+                btn->setStyleSheet("background-color: lightgray;");
+            } else {
+                btn->setText(QString::number(puzzle[i][j]));
+                btn->setStyleSheet("background-color: white;");
+            }
+        }
+    }
 }
+
 
 void Widget::handleTileClick()
 {
@@ -165,6 +186,42 @@ bool Widget::checkSolution()
     return true;
 }
 
+void Widget::animateTileSlide(int fromRow, int fromCol, int toRow, int toCol, int value)
+{
+    tileButtons[fromRow * 3 + fromCol]->setText("");
+    tileButtons[fromRow * 3 + fromCol]->setStyleSheet("background-color: lightgray;");
+
+    // 获取起始按钮的位置和大小
+    QWidget *fromBtn = tileButtons[fromRow * 3 + fromCol];
+    QRect startRect = fromBtn->geometry();
+    QPoint startGlobal = fromBtn->mapTo(this, QPoint(0, 0));
+
+    QWidget *toBtn = tileButtons[toRow * 3 + toCol];
+    QRect endRect = toBtn->geometry();
+    QPoint endGlobal = toBtn->mapTo(this, QPoint(0, 0));
+
+    // 创建一个浮动的动画按钮
+    QPushButton *floatBtn = new QPushButton(QString::number(value), this);
+    floatBtn->setGeometry(QRect(startGlobal, startRect.size()));
+    floatBtn->setStyleSheet("background-color: orange; font-weight: bold; border-radius: 10px;");
+    floatBtn->show();
+    floatBtn->raise();
+
+    // 动画滑动过去
+    QPropertyAnimation *anim = new QPropertyAnimation(floatBtn, "pos");
+    anim->setDuration(300);
+    anim->setStartValue(startGlobal);
+    anim->setEndValue(endGlobal);
+    anim->setEasingCurve(QEasingCurve::OutCubic);
+
+    connect(anim, &QPropertyAnimation::finished, this, [=]() {
+        floatBtn->deleteLater();  // 动画结束删除临时按钮
+        updatePuzzleUI();         // 更新真实按钮布局
+    });
+
+    anim->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
 void Widget::playAnimationPath(const QList<QVector<QVector<int>>> &path, int delayMs, const QString &finalMessage)
 {
     if (path.isEmpty()) {
@@ -173,23 +230,41 @@ void Widget::playAnimationPath(const QList<QVector<QVector<int>>> &path, int del
     }
 
     int step = 0;
+    // 如果有旧动画，先停掉
+    if (animationTimer) {
+        animationTimer->stop();
+        animationTimer->deleteLater();
+        animationTimer = nullptr;
+    }
     QTimer *timerAnim = new QTimer(this);
+
     connect(timerAnim, &QTimer::timeout, this, [=]() mutable {
         if (step >= path.size()) {
             timerAnim->stop();
             timerAnim->deleteLater();
+            animationTimer = nullptr;
             ui->goalLabel->setText(finalMessage);
             return;
         }
 
-        QPoint changedPos(-1, -1);
         if (step > 0) {
-            const auto &prev = path[step - 1];
-            const auto &curr = path[step];
+            QVector<QVector<int>> prev = path[step - 1];
+            QVector<QVector<int>> curr = path[step];
+
+            // 找到哪个格子动了
             for (int i = 0; i < 3; ++i) {
                 for (int j = 0; j < 3; ++j) {
-                    if (prev[i][j] != curr[i][j] && curr[i][j] != 0) {
-                        changedPos = QPoint(i, j);  // 当前非空、即将出现的位置
+                    if (prev[i][j] != 0 && curr[i][j] == 0) { // moved to blank
+                        int fromRow = i, fromCol = j;
+                        // 找新位置
+                        for (int r = 0; r < 3; ++r) {
+                            for (int c = 0; c < 3; ++c) {
+                                if (curr[r][c] == prev[i][j]) {
+                                    animateTileSlide(fromRow, fromCol, r, c, prev[i][j]);
+                                    break;
+                                }
+                            }
+                        }
                         break;
                     }
                 }
@@ -197,7 +272,6 @@ void Widget::playAnimationPath(const QList<QVector<QVector<int>>> &path, int del
         }
 
         puzzle = path[step];
-        updatePuzzleUI(changedPos);  // 传入高亮格子
         step++;
     });
     timerAnim->start(delayMs);
@@ -303,5 +377,6 @@ void Widget::on_runButton_clicked()
 
 void Widget::on_initButton_clicked()
 {
+
     initializePuzzle();
 }

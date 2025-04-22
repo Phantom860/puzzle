@@ -56,7 +56,7 @@ public:
         Widget->resize(800, 600);
         verticalLayoutWidget = new QWidget(Widget);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(40, 170, 341, 301));
+        verticalLayoutWidget->setGeometry(QRect(40, 170, 341, 316));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -64,47 +64,61 @@ public:
         puzzleGrid->setObjectName("puzzleGrid");
         pushButton_8 = new QPushButton(verticalLayoutWidget);
         pushButton_8->setObjectName("pushButton_8");
+        pushButton_8->setMaximumSize(QSize(100, 100));
 
         puzzleGrid->addWidget(pushButton_8, 2, 1, 1, 1);
 
         pushButton_9 = new QPushButton(verticalLayoutWidget);
         pushButton_9->setObjectName("pushButton_9");
+        pushButton_9->setMaximumSize(QSize(100, 100));
 
         puzzleGrid->addWidget(pushButton_9, 2, 2, 1, 1);
 
         pushButton_4 = new QPushButton(verticalLayoutWidget);
         pushButton_4->setObjectName("pushButton_4");
+        pushButton_4->setMinimumSize(QSize(100, 100));
+        pushButton_4->setMaximumSize(QSize(100, 100));
 
         puzzleGrid->addWidget(pushButton_4, 1, 0, 1, 1);
 
         pushButton_2 = new QPushButton(verticalLayoutWidget);
         pushButton_2->setObjectName("pushButton_2");
+        pushButton_2->setMinimumSize(QSize(100, 100));
+        pushButton_2->setMaximumSize(QSize(100, 100));
 
         puzzleGrid->addWidget(pushButton_2, 0, 1, 1, 1);
 
         pushButton_5 = new QPushButton(verticalLayoutWidget);
         pushButton_5->setObjectName("pushButton_5");
+        pushButton_5->setMinimumSize(QSize(100, 100));
+        pushButton_5->setMaximumSize(QSize(100, 100));
 
         puzzleGrid->addWidget(pushButton_5, 1, 1, 1, 1);
 
         pushButton_3 = new QPushButton(verticalLayoutWidget);
         pushButton_3->setObjectName("pushButton_3");
+        pushButton_3->setMaximumSize(QSize(100, 100));
 
         puzzleGrid->addWidget(pushButton_3, 0, 2, 1, 1);
 
         pushButton_7 = new QPushButton(verticalLayoutWidget);
         pushButton_7->setObjectName("pushButton_7");
+        pushButton_7->setMinimumSize(QSize(100, 100));
+        pushButton_7->setMaximumSize(QSize(100, 100));
 
         puzzleGrid->addWidget(pushButton_7, 2, 0, 1, 1);
 
         pushButton_6 = new QPushButton(verticalLayoutWidget);
         pushButton_6->setObjectName("pushButton_6");
+        pushButton_6->setMaximumSize(QSize(100, 100));
 
         puzzleGrid->addWidget(pushButton_6, 1, 2, 1, 1);
 
         pushButton_1 = new QPushButton(verticalLayoutWidget);
         pushButton_1->setObjectName("pushButton_1");
-        pushButton_1->setMinimumSize(QSize(66, 0));
+        pushButton_1->setMinimumSize(QSize(100, 100));
+        pushButton_1->setMaximumSize(QSize(100, 100));
+        pushButton_1->setStyleSheet(QString::fromUtf8("font: 14pt \"\351\230\277\351\207\214\345\246\210\345\246\210\344\270\234\346\226\271\345\244\247\346\245\267\";"));
 
         puzzleGrid->addWidget(pushButton_1, 0, 0, 1, 1);
 
@@ -113,12 +127,13 @@ public:
 
         initButton = new QPushButton(Widget);
         initButton->setObjectName("initButton");
-        initButton->setGeometry(QRect(40, 510, 141, 41));
-        initButton->setStyleSheet(QString::fromUtf8("font: 18pt \"\351\230\277\351\207\214\345\246\210\345\246\210\344\270\234\346\226\271\345\244\247\346\245\267\";"));
+        initButton->setGeometry(QRect(50, 510, 141, 41));
+        initButton->setStyleSheet(QString::fromUtf8("font: 18pt \"\351\230\277\351\207\214\345\246\210\345\246\210\344\270\234\346\226\271\345\244\247\346\245\267\";\n"
+"font: 16pt \"Calibri\";"));
         runButton = new QPushButton(Widget);
         runButton->setObjectName("runButton");
-        runButton->setGeometry(QRect(240, 510, 141, 41));
-        runButton->setStyleSheet(QString::fromUtf8("font: 18pt \"\351\230\277\351\207\214\345\246\210\345\246\210\344\270\234\346\226\271\345\244\247\346\245\267\";"));
+        runButton->setGeometry(QRect(230, 510, 141, 41));
+        runButton->setStyleSheet(QString::fromUtf8("font: 16pt \"Calibri\";"));
         algorithmCombo = new QComboBox(Widget);
         algorithmCombo->addItem(QString());
         algorithmCombo->addItem(QString());
